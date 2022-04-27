@@ -92,8 +92,8 @@ class DCloneTracker:
     def text(self):
         text = ""
         for key, value in self.progress.items():
-            text += f"*[{value}/6]* {Regions.TEXT[key[0]]} {Ladder.TEXT[key[1]]} {Hardcore.TEXT[key[2]]}\n"
-        text += "> Data courtesy of diablo2.io"
+            text += f"<b>[{value}/6]</b> {Regions.TEXT[key[0]]} {Ladder.TEXT[key[1]]} {Hardcore.TEXT[key[2]]}\n"
+        text += "<i>Data courtesy of diablo2.io</i>"
         return text
 
 
@@ -104,7 +104,7 @@ def start(update: Update, context: CallbackContext) -> None:
 def uber_diablo(update: Update, context: CallbackContext) -> None:
     dclone_tracker = DCloneTracker()
     dclone_tracker.update()
-    update.message.reply_text(dclone_tracker.text(), parse_mode=ParseMode.MARKDOWN_V2)
+    update.message.reply_text(dclone_tracker.text(), parse_mode=ParseMode.HTML)
 
 
 def main() -> None:
