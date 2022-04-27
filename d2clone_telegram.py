@@ -2,7 +2,7 @@
 import os
 
 import requests
-from telegram import Update
+from telegram import Update, ParseMode
 from telegram.ext import Updater, CommandHandler, CallbackContext
 
 BASE_URL = "https://diablo2.io/dclone_api.php"
@@ -92,7 +92,7 @@ class DCloneTracker:
     def text(self):
         text = ""
         for key, value in self.progress.items():
-            text += f"**[{value}/6]** {Regions.TEXT[key[0]]} {Ladder.TEXT[key[1]]} {Hardcore.TEXT[key[2]]}\n"
+            text += f"*[{value}/6]* {Regions.TEXT[key[0]]} {Ladder.TEXT[key[1]]} {Hardcore.TEXT[key[2]]}\n"
         text += "> Data courtesy of diablo2.io"
         return text
 
@@ -104,7 +104,7 @@ def start(update: Update, context: CallbackContext) -> None:
 def uber_diablo(update: Update, context: CallbackContext) -> None:
     dclone_tracker = DCloneTracker()
     dclone_tracker.update()
-    update.message.reply_text(dclone_tracker.text())
+    update.message.reply_text(dclone_tracker.text(), parse_mode=ParseMode.MARKDOWN_V2)
 
 
 def main() -> None:
