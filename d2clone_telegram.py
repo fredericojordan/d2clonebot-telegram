@@ -112,7 +112,7 @@ def main() -> None:
 
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("help", start))
-    dispatcher.add_handler(CommandHandler("uberdiablo", set_timer))
+    dispatcher.add_handler(CommandHandler("uberdiablo", uber_diablo))
 
     updater.start_polling()
 
