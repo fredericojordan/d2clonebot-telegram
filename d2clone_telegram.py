@@ -89,12 +89,46 @@ class DCloneTracker:
 
         return updated_statuses
 
-    def text(self):
+    def html_text(self, region=None, ladder=None, hardcore=None):
         text = ""
         for key, value in self.progress.items():
-            text += f"<b>[{value}/6]</b> {Regions.TEXT[key[0]]} {Ladder.TEXT[key[1]]} {Hardcore.TEXT[key[2]]}\n"
+            if filtered(key, region, ladder, hardcore):
+                text += f"<b>[{value}/6]</b> {Regions.TEXT[key[0]]} {Ladder.TEXT[key[1]]} {Hardcore.TEXT[key[2]]}\n"
         text += "<i>Data courtesy of diablo2.io</i>"
         return text
+
+
+def filtered(key, region, ladder, hardcore):
+    return (
+        (not region or key[0] == region)
+        and (not ladder or key[1] == ladder)
+        and (not hardcore or key[2] == hardcore)
+    )
+
+
+def parse_args(args):
+    region = None
+    ladder = None
+    hardcore = None
+
+    if any("am" in arg for arg in args):
+        region = Regions.AMERICAS
+    if any("eu" in arg for arg in args):
+        region = Regions.EUROPE
+    if any("as" in arg for arg in args):
+        region = Regions.ASIA
+
+    if any("non" in arg for arg in args):
+        ladder = Ladder.NON_LADDER
+    if any("ladder" in arg for arg in args) and not any("non" in arg for arg in args):
+        ladder = Ladder.LADDER
+
+    if any("hard" in arg for arg in args):
+        hardcore = Hardcore.HARDCORE
+    if any("soft" in arg for arg in args):
+        hardcore = Hardcore.SOFTCORE
+
+    return region, ladder, hardcore
 
 
 def start(update: Update, context: CallbackContext) -> None:
@@ -102,9 +136,16 @@ def start(update: Update, context: CallbackContext) -> None:
 
 
 def uber_diablo(update: Update, context: CallbackContext) -> None:
+    lower_args = [arg.lower() for arg in context.args]
+    region, ladder, hardcore = parse_args(lower_args)
+
     dclone_tracker = DCloneTracker()
     dclone_tracker.update()
-    update.message.reply_text(dclone_tracker.text(), parse_mode=ParseMode.HTML)
+
+    message = dclone_tracker.html_text(region=region, ladder=ladder, hardcore=hardcore)
+
+    if update.message:
+        update.message.reply_text(message, parse_mode=ParseMode.HTML)
 
 
 def main() -> None:
