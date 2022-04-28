@@ -133,7 +133,7 @@ def parse_args(args):
 
 def start(update: Update, context: CallbackContext) -> None:
     update.message.reply_text(
-        "Stay awhile and listen!\n"
+        "<b>Stay awhile and listen!</b>\n"
         "Use /uberdiablo to check Diablo Clone Tracker\n"
         "Add filters with <code>/uberdiablo softcore non-ladder americas</code>\n"
         "<i>Data courtesy of diablo2.io</i>",
