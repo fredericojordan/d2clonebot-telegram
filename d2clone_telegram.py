@@ -132,7 +132,13 @@ def parse_args(args):
 
 
 def start(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text("Hi! Use /uberdiablo to check Diablo Clone Tracker")
+    update.message.reply_text(
+        "Stay awhile and listen!\n"
+        "Use /uberdiablo to check Diablo Clone Tracker\n"
+        "Add filters with <code>/uberdiablo softcore non-ladder americas</code>\n"
+        "<i>Data courtesy of diablo2.io</i>",
+        parse_mode=ParseMode.HTML,
+    )
 
 
 def uber_diablo(update: Update, context: CallbackContext) -> None:
