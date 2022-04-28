@@ -115,7 +115,7 @@ def parse_args(args):
         region = Regions.AMERICAS
     if any("eu" in arg for arg in args):
         region = Regions.EUROPE
-    if any("as" in arg for arg in args):
+    if any("asi" in arg for arg in args):
         region = Regions.ASIA
 
     if any("non" in arg for arg in args):
