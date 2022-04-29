@@ -2,8 +2,11 @@
 import os
 
 import requests
+from dotenv import load_dotenv
 from telegram import Update, ParseMode
 from telegram.ext import Updater, CommandHandler, CallbackContext
+
+load_dotenv()
 
 BASE_URL = "https://diablo2.io/dclone_api.php"
 
